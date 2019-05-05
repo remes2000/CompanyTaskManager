@@ -6,7 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApplication\company-task-manager\src\app\components\" />
+    <Compile Remove="ClientApplication\**" />
+    <Content Remove="ClientApplication\**" />
+    <EmbeddedResource Remove="ClientApplication\**" />
+    <None Remove="ClientApplication\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

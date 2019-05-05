@@ -41,7 +41,7 @@ namespace CompanyTaskManager.Controllers
                 .SingleOrDefault(u => u.Username == requestUser.Username);
 
             if (userWithProvidedUsername != null)
-                return Ok(new { error = "This username is already taken!" });
+                return Ok(new { error = "Ta nazwa użytkownika jest już zajęta!" });
 
             User newUser = new User()
             {
@@ -55,7 +55,7 @@ namespace CompanyTaskManager.Controllers
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-            return Ok(new { message = "Succesful registered" });
+            return Ok(new { message = "Pomyślnie zarejestrowano!" });
         }
 
         [HttpPost]
@@ -74,7 +74,7 @@ namespace CompanyTaskManager.Controllers
                 .SingleOrDefault(u => u.Username == userCredentials.Username && BCrypt.Net.BCrypt.Verify(userCredentials.Password, u.PasswordHash));
 
             if (user == null)
-                return Unauthorized();
+                return Ok(new { error = "Podano nieprawidłową nazwę użytkownika lub hasło!"});
 
             string token = BuildToken(user);
             return Ok(new

@@ -1,0 +1,16 @@
+<div class="login-form-container">
+    <h2>Zaloguj się</h2>
+    <div class="field">
+      <div class="control">
+        <input class="input is-primary" type="text" placeholder="Nazwa użytkownika" [(ngModel)]="username">
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <input class="input is-primary" type="password" placeholder="Hasło" [(ngModel)]="password">
+      </div>
+    </div>
+    <button class="button is-primary float-right" (click)="loginUser()">
+        Zaloguj się
+    </button>
+</div>
