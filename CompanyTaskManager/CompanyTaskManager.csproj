@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApplication\company-task-manager\src\app\components\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

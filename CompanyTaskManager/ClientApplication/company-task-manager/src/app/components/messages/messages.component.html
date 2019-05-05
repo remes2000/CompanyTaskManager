@@ -1,0 +1,8 @@
+<ul class="messages">
+  <li *ngFor="let message of messagesService.messages" 
+    [class.error]="message.type=='error'" 
+    [class.success]="message.type=='successful'"
+    [class.info]="message.type=='info'">
+    {{message.content}}
+  </li>
+</ul>

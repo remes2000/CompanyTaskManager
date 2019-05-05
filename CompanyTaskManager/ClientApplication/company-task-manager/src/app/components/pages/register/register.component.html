@@ -1,0 +1,37 @@
+<div class="register-form-container">
+  <h2>Zarejestruj się</h2>
+  <p>Zarejestruj się aby móc w pełni wykorzystać potencjał tego narzędzia!</p>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Nazwa użytkownika" [(ngModel)]="username">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Imię" [(ngModel)]="name">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Nazwisko" [(ngModel)]="surname">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Email" [(ngModel)]="email">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="password" placeholder="Hasło" [(ngModel)]="password">
+    </div>
+  </div>
+    <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="password" placeholder="Powtórz hasło" [(ngModel)]="passwordRepeat">
+    </div>
+  </div>
+  <button class="button is-primary float-right" (click)="registerUser()">
+    Zarejestruj się
+  </button>
+</div>

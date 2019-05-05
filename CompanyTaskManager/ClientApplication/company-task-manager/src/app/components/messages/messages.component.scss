@@ -1,0 +1,27 @@
+ul{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    li{
+        font-size: 1.2rem;
+        padding: 1rem;
+        z-index: 1000;
+        margin-bottom: .5rem;
+        border-radius: .3rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .error{
+        background-color: hsl(348, 100%, 61%);
+    }
+
+    .success{
+        background-color: hsl(141, 71%, 48%);
+    }
+
+    .info{
+        background-color: hsl(204, 86%, 53%);
+    }
+}
