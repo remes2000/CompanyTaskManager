@@ -1,9 +1,14 @@
 ﻿using CompanyTaskManager.Models;
 using CompanyTaskManager.Models.RequestBodies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CompanyTaskManager.Controllers
@@ -13,10 +18,12 @@ namespace CompanyTaskManager.Controllers
     public class UsersController : Controller
     {
         private readonly CompanyTaskManagerContext _context;
+        private readonly IConfiguration _config;
 
-        public UsersController(CompanyTaskManagerContext context)
+        public UsersController(CompanyTaskManagerContext context, IConfiguration config)
         {
             _context = context;
+            _config = config; 
         }
 
         [HttpPost]
@@ -49,6 +56,53 @@ namespace CompanyTaskManager.Controllers
             _context.SaveChanges();
 
             return Ok(new { message = "Succesful registered" });
+        }
+
+        [HttpPost]
+        [Route("/api/[controller]/authenticate")]
+        public IActionResult AuthenticateUser([FromBody] UserCredentials userCredentials)
+        {
+            //check if request's body is valid
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            //check if credentials are correct
+            var user = _context
+                .Users
+                .SingleOrDefault(u => u.Username == userCredentials.Username && BCrypt.Net.BCrypt.Verify(userCredentials.Password, u.PasswordHash));
+
+            if (user == null)
+                return Unauthorized();
+
+            string token = BuildToken(user);
+            return Ok(new
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Token = token
+            });
+        }
+
+        private string BuildToken(User user)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+            };
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                claims,
+                expires: DateTime.Now.AddDays(30),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
