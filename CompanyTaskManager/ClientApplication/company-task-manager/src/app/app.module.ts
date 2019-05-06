@@ -13,6 +13,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { AddWorkplacementComponent } from './components/pages/add-workplacement/add-workplacement.component';
+import { WorkplacementComponent } from './components/pages/workplacement/workplacement.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AddWorkplacementComponent } from './components/pages/add-workplacement/
     MessagesComponent,
     LoginComponent,
     DashboardComponent,
-    AddWorkplacementComponent
+    AddWorkplacementComponent,
+    WorkplacementComponent
   ],
   imports: [
     BrowserModule,

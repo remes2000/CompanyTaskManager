@@ -1,4 +1,5 @@
 export interface ApiResponse{
     error?: string
-    message?: string
+    message?: string,
+    id?: number
 }

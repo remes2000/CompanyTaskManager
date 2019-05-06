@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
+import { WorkplacementService } from 'src/app/services/workplacement/workplacement.service';
 
 @Component({
   selector: 'app-add-workplacement',
@@ -9,7 +10,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class AddWorkplacementComponent implements OnInit {
 
   constructor(
-    private apiService: ApiService
+    private workplacementService: WorkplacementService
   ) { }
 
   private title: string = ''
@@ -19,6 +20,6 @@ export class AddWorkplacementComponent implements OnInit {
   }
 
   createWorkplacement(){
-    alert('test')
+    this.workplacementService.create(this.title, this.description)
   }
 }
