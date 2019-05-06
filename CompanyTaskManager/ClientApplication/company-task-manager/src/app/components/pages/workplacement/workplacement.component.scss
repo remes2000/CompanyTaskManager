@@ -6,3 +6,26 @@ h2{
 .main-feature{
     margin-top: 1.5rem;
 }
+
+h3{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.members-list{
+    li{
+        cursor: pointer;
+        padding: .7rem;
+        border: .1rem solid white;
+        display: table;
+        border-radius: .3rem;
+        font-size: 1.2rem;
+        margin: 1.5rem 0;
+        transition: .2s all linear;
+
+        &:hover{
+            background-color: white;
+            color: hsl(217, 71%, 53%);
+        }
+    }
+}

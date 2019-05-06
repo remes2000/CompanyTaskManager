@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkplacementService } from 'src/app/services/workplacement/workplacement.service';
 import { Workplacement } from 'src/app/models/Workplacement';
 import { ActivatedRoute } from '@angular/router'
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-workplacement',
@@ -17,6 +18,7 @@ export class WorkplacementComponent implements OnInit {
 
   private idFromRoute: number = -1
   private workplacement: Workplacement = null
+  private members: User[] = []
 
   ngOnInit() {
     this.idFromRoute = this.route.snapshot.params['id']
@@ -25,6 +27,9 @@ export class WorkplacementComponent implements OnInit {
       this.workplacement = workplacement
     })
 
+    this.workplacementService.getMembers(this.idFromRoute).subscribe((members: User[]) => {
+      this.members = members
+    })
   }
 
 }

@@ -29,4 +29,8 @@ export class WorkplacementService {
   getMyWorkplacements(){
     return this.apiService.get('/workplacements/myworkplacements')
   }
+
+  getMembers(workplacementId: number){
+    return this.apiService.get(`/workplacements/members/${workplacementId}`)
+  }
 }

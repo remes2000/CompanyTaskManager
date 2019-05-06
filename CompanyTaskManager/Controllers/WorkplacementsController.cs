@@ -98,5 +98,34 @@ namespace CompanyTaskManager.Controllers
             
             return Ok(workplacements);
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/[controller]/members/{workplacementId}")]
+        public IActionResult GetWorkplacementMembers(int workplacementId)
+        {
+            var usersIds = _context.UsersWorkplacements
+                .Where(uw => uw.WorkplacementId == workplacementId)
+                .Select(uw => uw.UserId)
+                .ToList();
+
+            if(!usersIds.Any())
+            {
+                return NotFound();
+            }
+
+            List<User> users = new List<User>();
+            User user;
+            foreach (int id in usersIds)
+            {
+                user = _context.Users.Single(u => u.Id == id);
+                user.PasswordHash = null;
+                user.Email = null;
+
+                users.Add(user);
+            }
+
+            return Ok(users);
+        }
     }
 }

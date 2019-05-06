@@ -4,6 +4,12 @@
   <div class="tile is-ancestor main-feature">
     <div class="tile is-parent is-4">
       <article class="tile is-child notification is-info">
+        <h3>Członkowie</h3>
+        <ul class="members-list">
+          <li *ngFor="let member of members">
+            <p class="name">{{member.name}} {{member.surname}}</p>
+          </li>
+        </ul>
       </article>
     </div>
     <div class="tile is-parent is-8">
