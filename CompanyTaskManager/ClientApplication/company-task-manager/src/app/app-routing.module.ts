@@ -5,11 +5,15 @@ import { RegisterComponent } from './components/pages/register/register.componen
 import { LoginComponent } from './components/pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard'
 import { UnauthGuard } from './guards/unauth.guard'
+import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
+import { AddWorkplacementComponent } from './components/pages/add-workplacement/add-workplacement.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'register', component: RegisterComponent, canActivate: [UnauthGuard]},
-  {path: 'login', component: LoginComponent, canActivate: [UnauthGuard]}
+  {path: 'login', component: LoginComponent, canActivate: [UnauthGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'add-workplacement', component: AddWorkplacementComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -1,0 +1,17 @@
+<div class="add-workplacement-form-container">
+  <h2>Kreator miejsca pracy</h2>
+  <p>Dodaj swoją firmę do systemu i zarządzaj zadaniami pracowników!</p>
+  <div class="field">
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Nazwa firmy np. Microsoft, Wykro-form, Alesis" [(ngModel)]="title">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+        <textarea class="textarea" placeholder="Opis - napisz czym zajmuje się twoja firma!" [(ngModel)]="description"></textarea>
+    </div>
+  </div>
+  <button class="button is-primary float-right" (click)="createWorkplacement()">
+    Stwórz
+  </button>
+</div>

@@ -10,6 +10,22 @@
             <a class="navbar-item" href="/">
               Strona główna
             </a>
+            <a *ngIf="authService.isUserLoggedIn()" href="/dashboard" class="navbar-item">
+              Dashboard
+            </a>
+          </div>
+          <div class="navbar-end" *ngIf="authService.isUserLoggedIn()">
+              <div class="navbar-item has-dropdown  is-hoverable">
+                  <a class="navbar-link">
+                    {{authService.currentUserValue.username}}
+                  </a>
+                
+                  <div class="navbar-dropdown">
+                    <a class="navbar-item" (click)="authService.logout()">
+                      Wyloguj się
+                    </a>
+                  </div>
+                </div>
           </div>
           <div class="navbar-end" *ngIf="!authService.isUserLoggedIn()">
               <div class="buttons">
