@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-add-workplacement',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddWorkplacementComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private apiService: ApiService
+  ) { }
 
   private title: string = ''
   private description: string = ''

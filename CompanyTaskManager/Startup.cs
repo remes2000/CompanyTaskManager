@@ -62,6 +62,7 @@ namespace CompanyTaskManager
                 builder.WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

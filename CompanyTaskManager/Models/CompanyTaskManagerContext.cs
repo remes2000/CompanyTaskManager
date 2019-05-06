@@ -11,5 +11,6 @@ namespace CompanyTaskManager.Models
         public CompanyTaskManagerContext(DbContextOptions<CompanyTaskManagerContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Workplacement> Workplacements { get; set; }
     }
 }
