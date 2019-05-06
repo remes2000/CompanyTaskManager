@@ -39,6 +39,7 @@ export class AuthService {
         }
 
         const user = response as User
+        console.log(user)
         
         if(user && user.token) {
           localStorage.setItem('companyTaskManagerCurrentUser', JSON.stringify(user))

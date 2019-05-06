@@ -81,7 +81,9 @@ namespace CompanyTaskManager.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                Token = token
+                Token = token,
+                Name = user.Name,
+                Surname = user.Surname
             });
         }
 
@@ -94,6 +96,8 @@ namespace CompanyTaskManager.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.Name),
+                new Claim(JwtRegisteredClaimNames.FamilyName, user.Surname)
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
