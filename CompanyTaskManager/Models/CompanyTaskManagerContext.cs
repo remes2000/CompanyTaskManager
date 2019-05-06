@@ -12,5 +12,6 @@ namespace CompanyTaskManager.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<Workplacement> Workplacements { get; set; }
+        public DbSet<UserWorkplacement> UsersWorkplacements { get; set; }
     }
 }

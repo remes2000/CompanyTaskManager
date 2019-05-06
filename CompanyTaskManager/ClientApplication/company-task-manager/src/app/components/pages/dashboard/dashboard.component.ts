@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkplacementService } from 'src/app/services/workplacement/workplacement.service';
+import { Workplacement } from 'src/app/models/Workplacement';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private workplacementService: WorkplacementService
+  ) { }
+
+  private workplacements: Workplacement[] = []
 
   ngOnInit() {
+    this.workplacementService.getMyWorkplacements().subscribe((response: Workplacement[]) => {
+      this.workplacements = response
+    })
   }
 
 }

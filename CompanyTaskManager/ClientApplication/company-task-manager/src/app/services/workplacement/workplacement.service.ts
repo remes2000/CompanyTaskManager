@@ -21,4 +21,12 @@ export class WorkplacementService {
       this.router.navigate([`/workplacement/${response.id}`])
     })
   }
+
+  getById(id: number){
+    return this.apiService.get(`/workplacements/${id}`)
+  }
+
+  getMyWorkplacements(){
+    return this.apiService.get('/workplacements/myworkplacements')
+  }
 }

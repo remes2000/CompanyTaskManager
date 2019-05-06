@@ -46,7 +46,57 @@ namespace CompanyTaskManager.Controllers
             _context.Workplacements.Add(newWorkplacement);
             _context.SaveChanges();
 
+            //Add user to workplacement
+            UserWorkplacement userWorkplacement = new UserWorkplacement
+            {
+                UserId = userId,
+                WorkplacementId = newWorkplacement.Id,
+                CanManageTasks = true
+            };
+            _context.UsersWorkplacements.Add(userWorkplacement);
+            _context.SaveChanges();
+
             return Ok( new { message = "Nowe miejsce pracy zostało pomyślnie zarejestrowane! ", id = newWorkplacement.Id});
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/[controller]/{id}")]
+        public IActionResult GetWorkplacement(int id)
+        {
+            var workplacement = _context
+                .Workplacements
+                .SingleOrDefault(w => w.Id == id);
+
+            if (workplacement == null)
+                return NotFound();
+
+            return Ok(workplacement);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/[controller]/myworkplacements")]
+        public IActionResult GetMyWorkplacements()
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            var workplacementsIds = _context.UsersWorkplacements
+                .Where(uw => uw.UserId == userId)
+                .Select(uw => uw.WorkplacementId)
+                .ToList();
+
+            if(!workplacementsIds.Any())
+            {
+                return NotFound();
+            }
+
+            List<Workplacement> workplacements = new List<Workplacement>();
+            foreach (int id in workplacementsIds)
+            {
+                workplacements.Add(_context.Workplacements.Single(w => w.Id == id));
+            }
+            
+            return Ok(workplacements);
         }
     }
 }

@@ -6,15 +6,20 @@
         <li>
           <a href="/add-workplacement">Dodaj miejsce pracy</a>
         </li>
-        <li>
-          <a href="/add-workplacement">Dodaj miejsce pracy</a>
-        </li>
       </ul>
     </article>
   </div>
   <div class="tile is-parent is-8">
     <article class="tile is-child notification">
-      <h2>Lorem ipsum</h2>
+      <h2>Miejsca pracy</h2>
+      <ul class="workplacement-list">
+        <li *ngFor="let w of workplacements">
+          <a href="/workplacement/{{w.id}}">
+            <h3>{{w.title}}</h3>
+            <p>{{w.description}}</p>
+          </a>
+        </li>
+      </ul>
     </article>
   </div>
 </div>

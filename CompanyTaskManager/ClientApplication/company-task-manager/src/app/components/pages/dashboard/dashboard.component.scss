@@ -8,3 +8,32 @@ h2{
         margin: 1rem 0;
     }
 }
+
+.workplacement-list{
+    li{
+        a{
+            margin: 1rem 0;
+            border-bottom: .1rem solid lightgray;
+            padding-bottom: 2rem;
+            padding: 2rem;
+            border-radius: .3rem;
+            display: block;
+            text-decoration: none;
+
+            
+            &:hover{
+                background-color: #f0f0f0;
+                cursor: pointer;
+            }
+        }
+
+        h3{
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        p{
+            margin-top: 1rem;
+        }
+    }
+}

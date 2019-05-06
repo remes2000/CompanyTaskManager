@@ -1,3 +1,14 @@
-<p>
-  workplacement works!
-</p>
+<div *ngIf="workplacement !== null">
+  <h2>{{workplacement.title}}</h2>
+  <p>{{workplacement.description}}</p>
+  <div class="tile is-ancestor main-feature">
+    <div class="tile is-parent is-4">
+      <article class="tile is-child notification is-info">
+      </article>
+    </div>
+    <div class="tile is-parent is-8">
+      <article class="tile is-child notification">
+      </article>
+    </div>
+  </div>
+</div>
