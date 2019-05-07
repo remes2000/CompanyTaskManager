@@ -172,5 +172,20 @@ namespace CompanyTaskManager.Controllers
 
             return Ok(new { message = "Użytkownik został pomyślnie dodany do miejsca pracy!" });
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/[controller]/canmanagetasks/{userId}/{workplacementId}")]
+        public IActionResult CheckIfCanManageTasks(int userId, int workplacementId)
+        {
+            var relation = _context
+                .UsersWorkplacements
+                .SingleOrDefault(uw => uw.UserId == userId && uw.WorkplacementId == workplacementId);
+
+            if (relation == null)
+                return NotFound();
+
+            return Ok(relation.CanManageTasks);
+        }
     }
 }

@@ -28,6 +28,11 @@ h3{
             color: hsl(217, 71%, 53%);
         }
     }
+
+    .selected{
+        background-color: white;
+        color: hsl(217, 71%, 53%); 
+    }
 }
 
 .owner-panel{
@@ -36,4 +41,8 @@ h3{
     h3{
         margin-bottom: 1rem;
     }
+}
+
+.manager-panel{
+    margin-top: 1rem;
 }

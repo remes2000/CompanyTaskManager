@@ -16,6 +16,7 @@ import { AddWorkplacementComponent } from './components/pages/add-workplacement/
 import { WorkplacementComponent } from './components/pages/workplacement/workplacement.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { AddEmployeeComponent } from './components/pages/workplacement/modals/add-employee/add-employee.component';
+import { AddTaskComponent } from './components/pages/workplacement/modals/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddEmployeeComponent } from './components/pages/workplacement/modals/ad
     AddWorkplacementComponent,
     WorkplacementComponent,
     ModalComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,

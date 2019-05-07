@@ -20,6 +20,7 @@ export class WorkplacementComponent implements OnInit {
 
   private idFromRoute: number = -1
   private workplacement: Workplacement = null
+  private canManageTasks: boolean = false
 
   ngOnInit() {
     this.idFromRoute = this.route.snapshot.params['id']
@@ -29,6 +30,16 @@ export class WorkplacementComponent implements OnInit {
     })
 
     this.workplacementService.updateCurrentWorkplacementsMembers(this.idFromRoute)
+
+    this.workplacementService.canManageTasks(this.authService.currentUserValue.id, this.idFromRoute).subscribe((res: boolean) => {
+      this.canManageTasks = res
+    })
+
+    this.workplacementService.selectedUser = this.authService.currentUserValue
+  }
+
+  selectUser(userId: number){
+    this.workplacementService.selectedUser = this.workplacementService.currentWorkplacementsMembers.filter(m => m.id === userId)[0]
   }
 
 }

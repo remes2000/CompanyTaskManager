@@ -1,0 +1,31 @@
+<app-modal #editStationModal="modal">
+    <div modal-header>Dodaj zadanie dla {{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</div>
+    <div modal-body>
+      <div class="field">
+        <div class="control">
+          <input class="input is-primary" type="text" placeholder="Tytuł zadania" [(ngModel)]="title">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+            <textarea class="textarea" placeholder="Opis zadania" [(ngModel)]="description"></textarea>
+        </div>
+      </div>
+      <div class="field">
+          <p>Priorytet</p>
+          <div class="control">
+            <div class="select is-primary">
+              <select [(ngModel)]="priority">
+                <option [value]="'highest'">Najwyższy</option>
+                <option [value]="'high'">Wysoki</option>
+                <option [value]="'normal'">Normalny</option>
+                <option [value]="'low'">Niski</option>
+              </select>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div modal-footer>
+      <button class="button is-primary" (click)="addTask()">Dodaj</button>
+    </div>
+</app-modal>

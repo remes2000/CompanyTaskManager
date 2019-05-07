@@ -18,10 +18,10 @@
   </div>
   <div class="tile is-ancestor main-feature">
     <div class="tile is-parent is-4">
-      <article class="tile is-child notification is-info">
+      <article class="tile is-child notification is-info" *ngIf="workplacementService.selectedUser !== null">
         <h3>Członkowie</h3>
         <ul class="members-list">
-          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers">
+          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers" (click)="selectUser(member.id)" [class.selected]="member.id===workplacementService.selectedUser.id">
             <p class="name">{{member.name}} {{member.surname}}</p>
           </li>
         </ul>
@@ -29,6 +29,14 @@
     </div>
     <div class="tile is-parent is-8">
       <article class="tile is-child notification">
+        <div *ngIf="workplacementService.selectedUser != null">
+          <h3>{{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</h3>
+        </div>
+        <div *ngIf="canManageTasks" class="manager-panel">
+          <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, workplacementService.selectedUser.id] } } ]">
+            Dodaj zadanie
+          </a>
+        </div>
       </article>
     </div>
   </div>

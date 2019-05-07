@@ -17,6 +17,7 @@ export class WorkplacementService {
   ) { }
 
   public currentWorkplacementsMembers: User[] = []
+  public selectedUser: User = null
 
   create(title: string, description: string){
     this.apiService.post('/workplacements', {title, description}).subscribe((response: ApiResponse) => {
@@ -45,5 +46,9 @@ export class WorkplacementService {
     this.getMembers(workplacementId).subscribe((response: User[]) => {
       this.currentWorkplacementsMembers = response
     })
+  }
+
+  canManageTasks(userId: number, workplacementId: number){
+    return this.apiService.get(`/workplacements/canmanagetasks/${userId}/${workplacementId}`)
   }
 }
