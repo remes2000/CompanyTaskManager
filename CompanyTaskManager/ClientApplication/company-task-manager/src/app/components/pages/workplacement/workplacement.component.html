@@ -1,12 +1,27 @@
 <div *ngIf="workplacement !== null">
   <h2>{{workplacement.title}}</h2>
   <p>{{workplacement.description}}</p>
+  <div class="tile is-ancestor owner-panel" *ngIf="authService.currentUserValue.id === workplacement.ownerId">
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-warning">
+        <h3>Panel właściciela</h3>
+        <div class="buttons">
+          <a class="button is-light" [routerLink]="[ '', {outlets: { modal: ['add-employee', idFromRoute] } } ]">
+            Dodaj pracownika
+          </a>
+          <a class="button is-light">
+            Usuń pracownika
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
   <div class="tile is-ancestor main-feature">
     <div class="tile is-parent is-4">
       <article class="tile is-child notification is-info">
         <h3>Członkowie</h3>
         <ul class="members-list">
-          <li *ngFor="let member of members">
+          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers">
             <p class="name">{{member.name}} {{member.surname}}</p>
           </li>
         </ul>

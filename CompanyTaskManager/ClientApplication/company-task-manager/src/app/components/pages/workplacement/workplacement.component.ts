@@ -3,6 +3,7 @@ import { WorkplacementService } from 'src/app/services/workplacement/workplaceme
 import { Workplacement } from 'src/app/models/Workplacement';
 import { ActivatedRoute } from '@angular/router'
 import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-workplacement',
@@ -13,12 +14,12 @@ export class WorkplacementComponent implements OnInit {
 
   constructor(
     private workplacementService: WorkplacementService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) { }
 
   private idFromRoute: number = -1
   private workplacement: Workplacement = null
-  private members: User[] = []
 
   ngOnInit() {
     this.idFromRoute = this.route.snapshot.params['id']
@@ -27,9 +28,7 @@ export class WorkplacementComponent implements OnInit {
       this.workplacement = workplacement
     })
 
-    this.workplacementService.getMembers(this.idFromRoute).subscribe((members: User[]) => {
-      this.members = members
-    })
+    this.workplacementService.updateCurrentWorkplacementsMembers(this.idFromRoute)
   }
 
 }

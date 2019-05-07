@@ -3,6 +3,7 @@ import { ApiService } from '../api/api.service';
 import { MessagesService } from '../messages/messages.service';
 import { ApiResponse } from 'src/app/models/ApiResponse';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class WorkplacementService {
     private messageService: MessagesService,
     private router: Router
   ) { }
+
+  public currentWorkplacementsMembers: User[] = []
 
   create(title: string, description: string){
     this.apiService.post('/workplacements', {title, description}).subscribe((response: ApiResponse) => {
@@ -32,5 +35,15 @@ export class WorkplacementService {
 
   getMembers(workplacementId: number){
     return this.apiService.get(`/workplacements/members/${workplacementId}`)
+  }
+
+  addMember(workplacementId: number, username: string, canManageTasks: boolean){
+    return this.apiService.post('/workplacements/addmember', {workplacementId, username, canManageTasks})
+  }
+
+  updateCurrentWorkplacementsMembers(workplacementId: number){
+    this.getMembers(workplacementId).subscribe((response: User[]) => {
+      this.currentWorkplacementsMembers = response
+    })
   }
 }

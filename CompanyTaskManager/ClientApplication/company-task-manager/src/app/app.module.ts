@@ -14,6 +14,8 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { AddWorkplacementComponent } from './components/pages/add-workplacement/add-workplacement.component';
 import { WorkplacementComponent } from './components/pages/workplacement/workplacement.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { AddEmployeeComponent } from './components/pages/workplacement/modals/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { WorkplacementComponent } from './components/pages/workplacement/workpla
     LoginComponent,
     DashboardComponent,
     AddWorkplacementComponent,
-    WorkplacementComponent
+    WorkplacementComponent,
+    ModalComponent,
+    AddEmployeeComponent
   ],
   imports: [
     BrowserModule,

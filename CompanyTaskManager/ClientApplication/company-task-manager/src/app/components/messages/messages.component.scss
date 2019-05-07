@@ -2,11 +2,12 @@ ul{
     position: absolute;
     bottom: 0;
     right: 0;
+    z-index: 50;
 
     li{
         font-size: 1.2rem;
         padding: 1rem;
-        z-index: 1000;
+        z-index: 30;
         margin-bottom: .5rem;
         border-radius: .3rem;
         color: white;

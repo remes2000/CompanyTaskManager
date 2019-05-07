@@ -127,5 +127,50 @@ namespace CompanyTaskManager.Controllers
 
             return Ok(users);
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("/api/[controller]/addmember")]
+        public IActionResult AddWorkplacementsMember([FromBody] RequestAddMember requestAddMember)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            var workplacement = _context
+                .Workplacements
+                .SingleOrDefault(w => w.Id == requestAddMember.WorkplacementId);
+
+            if (workplacement == null)
+                return NotFound();
+
+            if (workplacement.OwnerId != userId)
+                return Unauthorized();
+
+            var member = _context
+                .Users
+                .SingleOrDefault(u => u.Username == requestAddMember.Username);
+
+            if (member == null)
+                return Ok(new { error = "Taki użytkownik nie istnieje!" });
+
+            var relation = _context.UsersWorkplacements
+                .SingleOrDefault(uw => uw.UserId == member.Id && uw.WorkplacementId == workplacement.Id);
+
+            if (relation != null)
+                return Ok(new { error = "Ten użytkownik jest już twoim pracownikiem!" });
+
+            _context.UsersWorkplacements.Add(new UserWorkplacement
+            {
+                UserId = member.Id,
+                WorkplacementId = workplacement.Id,
+                CanManageTasks = requestAddMember.CanManageTasks
+            });
+            _context.SaveChanges();
+
+            return Ok(new { message = "Użytkownik został pomyślnie dodany do miejsca pracy!" });
+        }
     }
 }
