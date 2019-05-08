@@ -52,7 +52,7 @@ namespace CompanyTaskManager.Controllers
                 return NotFound();
 
             // Now check if can manage tasks
-            var canManageTasks = _context.UserWorkplacements.Single(uw => uw.UserId == uw.WorkplacementId).CanManageTasks;
+            var canManageTasks = _context.UserWorkplacements.Single(uw => uw.UserId == userId && uw.WorkplacementId == workplacement.WorkplacementId).CanManageTasks;
             if (!canManageTasks)
                 return Unauthorized();
 
