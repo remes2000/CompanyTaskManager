@@ -1,7 +1,7 @@
 <div *ngIf="workplacement !== null">
   <h2>{{workplacement.title}}</h2>
   <p>{{workplacement.description}}</p>
-  <div class="tile is-ancestor owner-panel" *ngIf="authService.currentUserValue.id === workplacement.ownerId">
+  <div class="tile is-ancestor owner-panel" *ngIf="authService.currentUserValue.userId === workplacement.ownerId">
     <div class="tile is-parent">
       <article class="tile is-child notification is-warning">
         <h3>Panel właściciela</h3>
@@ -21,7 +21,7 @@
       <article class="tile is-child notification is-info" *ngIf="workplacementService.selectedUser !== null">
         <h3>Członkowie</h3>
         <ul class="members-list">
-          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers" (click)="selectUser(member.id)" [class.selected]="member.id===workplacementService.selectedUser.id">
+          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers" (click)="selectUser(member.userId)" [class.selected]="member.userId===workplacementService.selectedUser.userId">
             <p class="name">{{member.name}} {{member.surname}}</p>
           </li>
         </ul>

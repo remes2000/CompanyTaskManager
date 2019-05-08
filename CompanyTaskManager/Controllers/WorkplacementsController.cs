@@ -2,6 +2,7 @@
 using CompanyTaskManager.Models.RequestBodies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,13 @@ namespace CompanyTaskManager.Controllers
             UserWorkplacement userWorkplacement = new UserWorkplacement
             {
                 UserId = userId,
-                WorkplacementId = newWorkplacement.Id,
+                WorkplacementId = newWorkplacement.WorkplacementId,
                 CanManageTasks = true
             };
-            _context.UsersWorkplacements.Add(userWorkplacement);
+            _context.UserWorkplacements.Add(userWorkplacement);
             _context.SaveChanges();
 
-            return Ok( new { message = "Nowe miejsce pracy zostało pomyślnie zarejestrowane! ", id = newWorkplacement.Id});
+            return Ok( new { message = "Nowe miejsce pracy zostało pomyślnie zarejestrowane! ", id = newWorkplacement.WorkplacementId});
         }
 
         [HttpGet]
@@ -66,7 +67,7 @@ namespace CompanyTaskManager.Controllers
         {
             var workplacement = _context
                 .Workplacements
-                .SingleOrDefault(w => w.Id == id);
+                .SingleOrDefault(w => w.WorkplacementId == id);
 
             if (workplacement == null)
                 return NotFound();
@@ -80,22 +81,12 @@ namespace CompanyTaskManager.Controllers
         public IActionResult GetMyWorkplacements()
         {
             int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-            var workplacementsIds = _context.UsersWorkplacements
-                .Where(uw => uw.UserId == userId)
-                .Select(uw => uw.WorkplacementId)
-                .ToList();
+            var workplacements =
+                _context.Workplacements
+                .Where(w =>
+                    w.UserWorkplacements.Any(uw => uw.UserId == userId)
+                );
 
-            if(!workplacementsIds.Any())
-            {
-                return NotFound();
-            }
-
-            List<Workplacement> workplacements = new List<Workplacement>();
-            foreach (int id in workplacementsIds)
-            {
-                workplacements.Add(_context.Workplacements.Single(w => w.Id == id));
-            }
-            
             return Ok(workplacements);
         }
 
@@ -104,28 +95,11 @@ namespace CompanyTaskManager.Controllers
         [Route("/api/[controller]/members/{workplacementId}")]
         public IActionResult GetWorkplacementMembers(int workplacementId)
         {
-            var usersIds = _context.UsersWorkplacements
-                .Where(uw => uw.WorkplacementId == workplacementId)
-                .Select(uw => uw.UserId)
-                .ToList();
+            var members = _context
+                .Users
+                .Where(u => u.UserWorkplacements.Any(uw => uw.WorkplacementId == workplacementId));
 
-            if(!usersIds.Any())
-            {
-                return NotFound();
-            }
-
-            List<User> users = new List<User>();
-            User user;
-            foreach (int id in usersIds)
-            {
-                user = _context.Users.Single(u => u.Id == id);
-                user.PasswordHash = null;
-                user.Email = null;
-
-                users.Add(user);
-            }
-
-            return Ok(users);
+            return Ok(members);
         }
 
         [HttpPost]
@@ -141,7 +115,7 @@ namespace CompanyTaskManager.Controllers
             int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
             var workplacement = _context
                 .Workplacements
-                .SingleOrDefault(w => w.Id == requestAddMember.WorkplacementId);
+                .SingleOrDefault(w => w.WorkplacementId == requestAddMember.WorkplacementId);
 
             if (workplacement == null)
                 return NotFound();
@@ -156,16 +130,16 @@ namespace CompanyTaskManager.Controllers
             if (member == null)
                 return Ok(new { error = "Taki użytkownik nie istnieje!" });
 
-            var relation = _context.UsersWorkplacements
-                .SingleOrDefault(uw => uw.UserId == member.Id && uw.WorkplacementId == workplacement.Id);
+            var relation = _context.UserWorkplacements
+                .SingleOrDefault(uw => uw.UserId == member.UserId && uw.WorkplacementId == workplacement.WorkplacementId);
 
             if (relation != null)
                 return Ok(new { error = "Ten użytkownik jest już twoim pracownikiem!" });
 
-            _context.UsersWorkplacements.Add(new UserWorkplacement
+            _context.UserWorkplacements.Add(new UserWorkplacement
             {
-                UserId = member.Id,
-                WorkplacementId = workplacement.Id,
+                UserId = member.UserId,
+                WorkplacementId = workplacement.WorkplacementId,
                 CanManageTasks = requestAddMember.CanManageTasks
             });
             _context.SaveChanges();
@@ -179,7 +153,7 @@ namespace CompanyTaskManager.Controllers
         public IActionResult CheckIfCanManageTasks(int userId, int workplacementId)
         {
             var relation = _context
-                .UsersWorkplacements
+                .UserWorkplacements
                 .SingleOrDefault(uw => uw.UserId == userId && uw.WorkplacementId == workplacementId);
 
             if (relation == null)

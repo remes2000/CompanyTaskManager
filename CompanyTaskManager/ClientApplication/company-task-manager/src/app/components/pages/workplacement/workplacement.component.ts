@@ -31,7 +31,7 @@ export class WorkplacementComponent implements OnInit {
 
     this.workplacementService.updateCurrentWorkplacementsMembers(this.idFromRoute)
 
-    this.workplacementService.canManageTasks(this.authService.currentUserValue.id, this.idFromRoute).subscribe((res: boolean) => {
+    this.workplacementService.canManageTasks(this.authService.currentUserValue.userId, this.idFromRoute).subscribe((res: boolean) => {
       this.canManageTasks = res
     })
 
@@ -39,7 +39,7 @@ export class WorkplacementComponent implements OnInit {
   }
 
   selectUser(userId: number){
-    this.workplacementService.selectedUser = this.workplacementService.currentWorkplacementsMembers.filter(m => m.id === userId)[0]
+    this.workplacementService.selectedUser = this.workplacementService.currentWorkplacementsMembers.filter(m => m.userId === userId)[0]
   }
 
 }

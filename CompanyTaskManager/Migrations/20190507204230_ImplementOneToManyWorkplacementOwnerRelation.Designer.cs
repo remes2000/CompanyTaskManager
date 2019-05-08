@@ -2,15 +2,17 @@
 using CompanyTaskManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CompanyTaskManager.Migrations
 {
     [DbContext(typeof(CompanyTaskManagerContext))]
-    partial class CompanyTaskManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20190507204230_ImplementOneToManyWorkplacementOwnerRelation")]
+    partial class ImplementOneToManyWorkplacementOwnerRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,8 +45,6 @@ namespace CompanyTaskManager.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("WorkplacementId");
-
-                    b.Property<bool>("CanManageTasks");
 
                     b.HasKey("UserId", "WorkplacementId");
 

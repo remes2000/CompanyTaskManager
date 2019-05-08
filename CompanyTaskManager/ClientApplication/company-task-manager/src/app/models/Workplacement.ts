@@ -1,5 +1,5 @@
 export interface Workplacement{
-    id: number,
+    workplacementId: number,
     title: string,
     description: string,
     ownerId: number

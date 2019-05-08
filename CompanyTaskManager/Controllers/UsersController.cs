@@ -79,7 +79,7 @@ namespace CompanyTaskManager.Controllers
             string token = BuildToken(user);
             return Ok(new
             {
-                Id = user.Id,
+                UserId = user.UserId,
                 Username = user.Username,
                 Token = token,
                 Name = user.Name,
@@ -95,7 +95,7 @@ namespace CompanyTaskManager.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
-                new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.Name),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.Surname)
             };

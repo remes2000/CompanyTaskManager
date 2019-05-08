@@ -2,15 +2,17 @@
 using CompanyTaskManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CompanyTaskManager.Migrations
 {
     [DbContext(typeof(CompanyTaskManagerContext))]
-    partial class CompanyTaskManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20190507201828_ImplementManyToManyUserWorkplacementRelationship")]
+    partial class ImplementManyToManyUserWorkplacementRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,8 +46,6 @@ namespace CompanyTaskManager.Migrations
 
                     b.Property<int>("WorkplacementId");
 
-                    b.Property<bool>("CanManageTasks");
-
                     b.HasKey("UserId", "WorkplacementId");
 
                     b.HasIndex("WorkplacementId");
@@ -60,13 +60,9 @@ namespace CompanyTaskManager.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("OwnerId");
-
                     b.Property<string>("Title");
 
                     b.HasKey("WorkplacementId");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Workplacements");
                 });
@@ -81,14 +77,6 @@ namespace CompanyTaskManager.Migrations
                     b.HasOne("CompanyTaskManager.Models.Workplacement", "Workplacement")
                         .WithMany("UserWorkplacements")
                         .HasForeignKey("WorkplacementId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CompanyTaskManager.Models.Workplacement", b =>
-                {
-                    b.HasOne("CompanyTaskManager.Models.User", "Owner")
-                        .WithMany("OwnedWorkplacements")
-                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
