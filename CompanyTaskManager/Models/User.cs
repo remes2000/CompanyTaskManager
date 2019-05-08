@@ -17,5 +17,7 @@ namespace CompanyTaskManager.Models
         
         public ICollection<Workplacement> OwnedWorkplacements { get; set; }
         public IList<UserWorkplacement> UserWorkplacements { get; set; }
+        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Task> AddedTasks { get; set; }
     }
 }

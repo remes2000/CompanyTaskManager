@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace CompanyTaskManager
 {
@@ -46,7 +47,10 @@ namespace CompanyTaskManager
             services.AddEntityFrameworkNpgsql().AddDbContext<CompanyTaskManagerContext>(opt =>
                 opt.UseNpgsql(Configuration.GetConnectionString("CompanyTaskManagerConnection")));
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                 });
             services.AddCors();
         }
 

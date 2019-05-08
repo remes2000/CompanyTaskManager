@@ -1,0 +1,19 @@
+<app-modal #displayTaskModal="modal">
+  <div modal-header>{{taskService.selectedTask.title}}</div>
+  <div modal-body>
+    <p>
+      <b>{{taskService.selectedTask.priority | priority}} priorytet</b>
+    </p>
+    <p>
+      <b>Zadane przez: {{taskService.selectedTask.addedBy.name}} {{taskService.selectedTask.addedBy.surname}}</b>
+    </p>
+    <p>
+      <b>{{taskService.selectedTask.addDate | date:'dd-LL-yyyy HH:mm'}}</b>
+    </p>
+    <p class="description">
+      {{taskService.selectedTask.description}}
+    </p>
+  </div>
+  <div modal-footer>
+  </div>
+</app-modal>

@@ -46,3 +46,42 @@ h3{
 .manager-panel{
     margin-top: 1rem;
 }
+
+.task{
+    a{
+        text-decoration: none;
+    }
+
+    h4{
+        font-size: 1.4rem;
+    }
+
+    .description{
+        margin: 1.5rem 0;
+        text-align: justify;
+    }
+
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 3px solid #f0f0f0;
+    border-radius: .1rem;
+
+    &:hover{
+        background-color: #f0f0f0;
+    }
+}
+
+h4{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.doing-tasks{
+    background-color: hsl(204, 86%, 53%);
+    color: white;
+
+    &:hover{
+        background-color: hsl(217, 71%, 53%);
+    }
+}

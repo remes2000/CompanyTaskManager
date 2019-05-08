@@ -33,10 +33,38 @@
           <h3>{{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</h3>
         </div>
         <div *ngIf="canManageTasks" class="manager-panel">
-          <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, workplacementService.selectedUser.id] } } ]">
+          <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, workplacementService.selectedUser.userId] } } ]">
             Dodaj zadanie
           </a>
         </div>
+        <h4>Do zrobienia:</h4>
+        <ul class="tasks">
+          <li *ngFor="let task of taskService.selectedUserTasks.filter(todoFilter).sort(sortByPriority)" class="task">
+            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+              <h4>{{task.title}}</h4>
+              <p><b>{{task.priority | priority}} priorytet</b></p>
+              <p class="description">
+                {{task.description}}
+              </p>
+              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+            </a>
+          </li>
+        </ul>
+        <h4>W trakcie pracy:</h4>
+        <ul class="tasks">
+          <li *ngFor="let task of taskService.selectedUserTasks.filter(doingFilter).sort(sortByPriority)" class="task doing-tasks">
+            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+              <h4>{{task.title}}</h4>
+              <p><b>{{task.priority | priority}} priorytet</b></p>
+              <p class="description">
+                {{task.description}}
+              </p>
+              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+            </a>
+          </li>
+        </ul>
       </article>
     </div>
   </div>

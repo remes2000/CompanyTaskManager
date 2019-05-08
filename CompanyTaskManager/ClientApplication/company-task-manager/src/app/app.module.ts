@@ -17,6 +17,8 @@ import { WorkplacementComponent } from './components/pages/workplacement/workpla
 import { ModalComponent } from './components/modal/modal.component';
 import { AddEmployeeComponent } from './components/pages/workplacement/modals/add-employee/add-employee.component';
 import { AddTaskComponent } from './components/pages/workplacement/modals/add-task/add-task.component';
+import { DisplayTaskComponent } from './components/pages/workplacement/modals/display-task/display-task.component';
+import { PriorityPipe } from './components/pipes/priority.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { AddTaskComponent } from './components/pages/workplacement/modals/add-ta
     WorkplacementComponent,
     ModalComponent,
     AddEmployeeComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    DisplayTaskComponent,
+    PriorityPipe
   ],
   imports: [
     BrowserModule,

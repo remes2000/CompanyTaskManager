@@ -13,6 +13,8 @@ namespace CompanyTaskManager.Models
 
         public int OwnerId { get; set; }
         public User Owner { get; set; }
+
         public IList<UserWorkplacement> UserWorkplacements { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }

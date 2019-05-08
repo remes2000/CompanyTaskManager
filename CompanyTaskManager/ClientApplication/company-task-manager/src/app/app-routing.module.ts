@@ -10,6 +10,7 @@ import { AddWorkplacementComponent } from './components/pages/add-workplacement/
 import { WorkplacementComponent } from './components/pages/workplacement/workplacement.component';
 import { AddEmployeeComponent } from './components/pages/workplacement/modals/add-employee/add-employee.component';
 import { AddTaskComponent } from './components/pages/workplacement/modals/add-task/add-task.component';
+import { DisplayTaskComponent } from './components/pages/workplacement/modals/display-task/display-task.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'add-workplacement', component: AddWorkplacementComponent, canActivate: [AuthGuard]},
   {path: 'workplacement/:id', component: WorkplacementComponent, canActivate: [AuthGuard]},
   {path: 'add-employee/:workplacementId', component: AddEmployeeComponent, outlet: 'modal', canActivate: [AuthGuard]},
-  {path: 'add-task/:workplacementId/:userId', component: AddTaskComponent, outlet: 'modal', canActivate: [AuthGuard]}
+  {path: 'add-task/:workplacementId/:userId', component: AddTaskComponent, outlet: 'modal', canActivate: [AuthGuard]},
+  {path: 'display-task', component: DisplayTaskComponent, outlet: 'modal', canActivate: [AuthGuard]}
 ];
 
 @NgModule({
