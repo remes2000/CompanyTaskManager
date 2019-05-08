@@ -31,4 +31,8 @@ export class TaskService {
   selectTask(task: Task){
     this.selectedTask = task
   }
+
+  changeStatus(taskId: number, status: string){
+    return this.apiService.post(`/tasks/changestatus/${taskId}`, { status })
+  }
 }

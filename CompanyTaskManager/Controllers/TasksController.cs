@@ -84,5 +84,28 @@ namespace CompanyTaskManager.Controllers
 
             return Ok(tasks);
         }
+
+        [HttpPost]
+        [Route("/api/[controller]/changestatus/{taskId}")]
+        public IActionResult ChangeStatus(int taskId, [FromBody] RequestChangeStatus requestChangeStatus)
+        {
+            var task = _context.Tasks
+                .SingleOrDefault(t => t.TaskId == taskId);
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+            if (task == null)
+                return NotFound();
+
+            if (userId != task.EmployeeId)
+                return Unauthorized();
+
+            if (requestChangeStatus.Status != "done" && requestChangeStatus.Status != "doing" && requestChangeStatus.Status != "done")
+                return BadRequest();
+
+            task.Status = requestChangeStatus.Status;
+            _context.SaveChanges();
+
+            return Ok(new { message = "Status został pomyślnie zmieniony"});
+        }
     }
 }

@@ -65,6 +65,20 @@
             </a>
           </li>
         </ul>
+        <h4>Zrobione: </h4>
+        <ul class="tasks">
+          <li *ngFor="let task of taskService.selectedUserTasks.filter(doneFilter).sort(sortByPriority)" class="task done-tasks">
+            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+              <h4>{{task.title}}</h4>
+              <p><b>{{task.priority | priority}} priorytet</b></p>
+              <p class="description">
+                {{task.description}}
+              </p>
+              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+            </a>
+          </li>
+        </ul>
       </article>
     </div>
   </div>

@@ -15,5 +15,9 @@
     </p>
   </div>
   <div modal-footer>
+    <div *ngIf="taskService.selectedTask.employee.userId === authService.currentUserValue.userId" class="buttons">
+      <button class="button is-info" *ngIf="taskService.selectedTask.status !== 'doing'" (click)="changeStatus('doing')">Zmień status na "W trakcie pracy"</button>
+      <button class="button is-success" *ngIf="taskService.selectedTask.status !=='done'" (click)="changeStatus('done')">Zmień status na "Zrobione"</button>
+    </div>
   </div>
 </app-modal>

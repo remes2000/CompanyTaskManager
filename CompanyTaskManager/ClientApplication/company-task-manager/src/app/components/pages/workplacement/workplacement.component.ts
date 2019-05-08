@@ -57,6 +57,10 @@ export class WorkplacementComponent implements OnInit {
     return task.status === 'doing'
   }
 
+  doneFilter(task: Task){
+    return task.status === 'done'
+  }
+
   sortByPriority(a: Task, b: Task){
     const pipe = new PriorityPipe()
     return  pipe.transform(b.priority, true) - pipe.transform(a.priority, true)
