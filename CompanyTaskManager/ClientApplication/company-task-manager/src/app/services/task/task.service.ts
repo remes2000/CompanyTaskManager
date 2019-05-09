@@ -35,4 +35,8 @@ export class TaskService {
   changeStatus(taskId: number, status: string){
     return this.apiService.post(`/tasks/changestatus/${taskId}`, { status })
   }
+
+  deleteTask(task: Task){
+    return this.apiService.delete(`/tasks/${task.taskId}`)
+  }
 }

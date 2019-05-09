@@ -19,5 +19,8 @@
       <button class="button is-info" *ngIf="taskService.selectedTask.status !== 'doing'" (click)="changeStatus('doing')">Zmień status na "W trakcie pracy"</button>
       <button class="button is-success" *ngIf="taskService.selectedTask.status !=='done'" (click)="changeStatus('done')">Zmień status na "Zrobione"</button>
     </div>
+    <div class="buttons">
+        <button class="button is-danger" *ngIf="canManageTasks" (click)="deleteTask()">Usuń zadanie</button>
+    </div>
   </div>
 </app-modal>

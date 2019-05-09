@@ -21,8 +21,12 @@ export class DisplayTaskComponent implements OnInit {
   ) { }
 
   @ViewChild("displayTaskModal") displayTaskModal: ModalComponent;
+  private canManageTasks: boolean = false
 
   ngOnInit() {
+    this.workplacementService.canManageTasks(this.authService.currentUserValue.userId, this.taskService.selectedTask.workplacementId).subscribe((res: boolean) => {
+      this.canManageTasks = res
+    })
   }
 
   changeStatus(status: string){
@@ -32,6 +36,17 @@ export class DisplayTaskComponent implements OnInit {
         this.displayTaskModal.closeModal('displayTaskModal')
         this.taskService.updateTasks(this.taskService.selectedTask.workplacementId, this.taskService.selectedTask.employeeId)
       }
+    })
+  }
+
+  deleteTask(){
+    this.taskService.deleteTask(this.taskService.selectedTask).subscribe((res: ApiResponse) => {
+      if(!res.message)
+        return
+      
+      this.messageService.pushMessage(res.message, 'successful', 5)
+      this.taskService.updateTasks(this.taskService.selectedTask.workplacementId, this.taskService.selectedTask.employeeId)
+      this.displayTaskModal.closeModal('displayTaskModal')
     })
   }
 }

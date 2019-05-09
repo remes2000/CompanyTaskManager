@@ -107,5 +107,33 @@ namespace CompanyTaskManager.Controllers
 
             return Ok(new { message = "Status został pomyślnie zmieniony"});
         }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("/api/[controller]/{taskId}")]
+        public IActionResult DeleteTask(int taskId)
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            var task = _context.Tasks
+                .Include(t => t.Workplacement)
+                    .ThenInclude(w => w.UserWorkplacements)
+                .SingleOrDefault(t => t.TaskId == taskId);
+
+            if (task == null)
+                return NotFound();
+
+            //now check privillages
+            var userWorkplacementRelation = task.Workplacement.UserWorkplacements.SingleOrDefault(u => u.UserId == userId);
+            if (userWorkplacementRelation == null)
+                return NotFound();
+
+            if (!userWorkplacementRelation.CanManageTasks)
+                return Unauthorized();
+
+            _context.Tasks.Remove(task);
+            _context.SaveChanges();
+
+            return Ok(new { message = "Zadanie zostało pomyślnie usunięte" });
+        }
     }
 }
