@@ -1,0 +1,16 @@
+<app-modal #deleteEmployeeModal="modal">
+  <div modal-header>Usuń pracownika</div>
+  <div modal-body>
+    <ul>
+      <li *ngFor="let member of workplacementService.currentWorkplacementsMembers">
+        <div *ngIf="authService.currentUserValue.userId !== member.userId" class="member" (click)="select(member)" 
+        [class.selected]="selectedUser === member">
+          {{member.name}} {{member.surname}}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div modal-footer>
+    <button class="button is-danger" (click)="deleteMembers()">Usuń pracownika</button>
+  </div>
+</app-modal>

@@ -9,7 +9,7 @@
           <a class="button is-light" [routerLink]="[ '', {outlets: { modal: ['add-employee', idFromRoute] } } ]">
             Dodaj pracownika
           </a>
-          <a class="button is-light">
+          <a class="button is-light" [routerLink]="[ '', {outlets: { modal: ['delete-employee', idFromRoute] } } ]">
             Usuń pracownika
           </a>
         </div>

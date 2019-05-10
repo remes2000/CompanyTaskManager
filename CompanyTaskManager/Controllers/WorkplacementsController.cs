@@ -161,5 +161,47 @@ namespace CompanyTaskManager.Controllers
 
             return Ok(relation.CanManageTasks);
         }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("/api/[controller]/deleteemployee/{workplacementId}/{employeeId}")]
+        public IActionResult DeleteEmployee(int workplacementId, int employeeId)
+        {
+            var workplacement = _context.Workplacements
+                .Include(w => w.UserWorkplacements)
+                .Include(w => w.Tasks)
+                .SingleOrDefault(w => w.WorkplacementId == workplacementId);
+
+            if (workplacement == null)
+                return NotFound();
+
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            if (userId != workplacement.OwnerId)
+                return Unauthorized();
+
+            if (employeeId == workplacement.OwnerId)
+                return BadRequest();
+
+            if (!workplacement.UserWorkplacements.Any(uw => uw.UserId == employeeId))
+                return NotFound();
+
+            //first clear all this user tasks
+            //delete done tasks
+            var tasks = workplacement.Tasks.Where(t => t.EmployeeId == employeeId);
+            foreach( var task in tasks)
+            {
+                task.EmployeeId = null;
+                if (task.Status == "done")
+                    _context.Tasks.Remove(task);
+                else
+                    task.Status = "todo";
+            }
+
+            var relation = workplacement.UserWorkplacements.Single(uw => uw.UserId == employeeId);
+            _context.UserWorkplacements.Remove(relation);
+            _context.SaveChanges();
+
+            return Ok(new { message = "Pracownik został usunięty"});
+        }
     }
 }

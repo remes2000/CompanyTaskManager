@@ -42,6 +42,10 @@ export class WorkplacementService {
     return this.apiService.post('/workplacements/addmember', {workplacementId, username, canManageTasks})
   }
 
+  removeMember(workplacementId: number, userId: number){
+    return this.apiService.delete(`/workplacements/deleteemployee/${workplacementId}/${userId}`)
+  }
+
   updateCurrentWorkplacementsMembers(workplacementId: number){
     this.getMembers(workplacementId).subscribe((response: User[]) => {
       this.currentWorkplacementsMembers = response

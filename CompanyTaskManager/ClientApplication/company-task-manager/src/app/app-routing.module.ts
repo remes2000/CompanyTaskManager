@@ -11,6 +11,7 @@ import { WorkplacementComponent } from './components/pages/workplacement/workpla
 import { AddEmployeeComponent } from './components/pages/workplacement/modals/add-employee/add-employee.component';
 import { AddTaskComponent } from './components/pages/workplacement/modals/add-task/add-task.component';
 import { DisplayTaskComponent } from './components/pages/workplacement/modals/display-task/display-task.component';
+import { DeleteEmployeeComponent } from './components/pages/workplacement/modals/delete-employee/delete-employee.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'workplacement/:id', component: WorkplacementComponent, canActivate: [AuthGuard]},
   {path: 'add-employee/:workplacementId', component: AddEmployeeComponent, outlet: 'modal', canActivate: [AuthGuard]},
   {path: 'add-task/:workplacementId/:userId', component: AddTaskComponent, outlet: 'modal', canActivate: [AuthGuard]},
-  {path: 'display-task', component: DisplayTaskComponent, outlet: 'modal', canActivate: [AuthGuard]}
+  {path: 'display-task', component: DisplayTaskComponent, outlet: 'modal', canActivate: [AuthGuard]},
+  {path: 'delete-employee/:workplacementId', component: DeleteEmployeeComponent, outlet: 'modal', canActivate: [AuthGuard]}
 ];
 
 @NgModule({

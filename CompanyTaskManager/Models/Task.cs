@@ -12,7 +12,7 @@ namespace CompanyTaskManager.Models
         public int WorkplacementId { get; set; }
         public Workplacement Workplacement { get; set; }
 
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public User Employee { get; set; }
 
         public int AddedById { get; set; }
