@@ -6,6 +6,9 @@
         <li>
           <a href="/add-workplacement">Dodaj miejsce pracy</a>
         </li>
+        <li>
+          <a [routerLink]="[ '', {outlets: { modal: ['delete-workplacement'] } } ]">Usuń miejsce pracy</a>
+        </li>
       </ul>
     </article>
   </div>
@@ -13,7 +16,7 @@
     <article class="tile is-child notification">
       <h2>Miejsca pracy</h2>
       <ul class="workplacement-list">
-        <li *ngFor="let w of workplacements">
+        <li *ngFor="let w of workplacementService.displayedWorkplacements">
           <a href="/workplacement/{{w.workplacementId}}">
             <h3>{{w.title}}</h3>
             <p>{{w.description}}</p>

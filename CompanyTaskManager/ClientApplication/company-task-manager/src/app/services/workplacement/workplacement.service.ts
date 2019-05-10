@@ -4,6 +4,7 @@ import { MessagesService } from '../messages/messages.service';
 import { ApiResponse } from 'src/app/models/ApiResponse';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
+import { Workplacement } from 'src/app/models/Workplacement';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class WorkplacementService {
   public currentWorkplacementsMembers: User[] = []
   public selectedUser: User = null
   public showFreeTasks = false
+  public displayedWorkplacements: Workplacement[] = []
 
   create(title: string, description: string){
     this.apiService.post('/workplacements', {title, description}).subscribe((response: ApiResponse) => {
@@ -33,6 +35,12 @@ export class WorkplacementService {
 
   getMyWorkplacements(){
     return this.apiService.get('/workplacements/myworkplacements')
+  }
+
+  updateMyWorkplacements(){
+    this.apiService.get('/workplacements/myworkplacements').subscribe((res: Workplacement[]) => {
+      this.displayedWorkplacements = res
+    })
   }
 
   getMembers(workplacementId: number){
@@ -55,5 +63,13 @@ export class WorkplacementService {
 
   canManageTasks(userId: number, workplacementId: number){
     return this.apiService.get(`/workplacements/canmanagetasks/${userId}/${workplacementId}`)
+  }
+
+  getWorkplacementsOwnedBy(userId: number){
+    return this.apiService.get(`/workplacements/ownedby/${userId}`)
+  }
+
+  deleteWorkplacement(workplacementId: number){
+    return this.apiService.delete(`/workplacements/${workplacementId}`)
   }
 }

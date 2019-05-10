@@ -1,0 +1,14 @@
+<app-modal #deleteWorkplacementModal="modal">
+    <div modal-header>Usuń miejsce pracy</div>
+    <div modal-body>
+      <ul>
+        <li *ngFor="let workplacement of workplacements" class="workplacement"
+          [class.selected]="selectedWorkplacement === workplacement" (click)="selectedWorkplacement = workplacement">
+          {{workplacement.title}}
+        </li>
+    </ul>
+    </div>
+    <div modal-footer>
+      <button class="button is-danger" (click)="deleteWorkplacement()">Usuń</button>
+    </div>
+  </app-modal>

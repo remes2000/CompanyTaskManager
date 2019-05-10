@@ -92,6 +92,17 @@ namespace CompanyTaskManager.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("/api/[controller]/ownedby/{ownerId}")]
+        public IActionResult GetWorkplacementsOwnedBy(int ownerId)
+        {
+            var workplacements = _context.Workplacements
+                .Where(w => w.OwnerId == ownerId);
+
+            return Ok(workplacements);
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("/api/[controller]/members/{workplacementId}")]
         public IActionResult GetWorkplacementMembers(int workplacementId)
         {
@@ -202,6 +213,26 @@ namespace CompanyTaskManager.Controllers
             _context.SaveChanges();
 
             return Ok(new { message = "Pracownik został usunięty"});
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("/api/[controller]/{workplacementId}")]
+        public IActionResult DeleteWorkplace(int workplacementId)
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+            var workplacement = _context.Workplacements.SingleOrDefault(w => w.WorkplacementId == workplacementId);
+            if (workplacement == null)
+                return NotFound();
+
+            if (workplacement.OwnerId != userId)
+                return Unauthorized();
+
+            _context.Workplacements.Remove(workplacement);
+            _context.SaveChanges();
+
+            return Ok(new { message = "Miejsce pracy zostało pomyślnie usunięte" });
         }
     }
 }
