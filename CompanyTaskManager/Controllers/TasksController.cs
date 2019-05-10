@@ -44,7 +44,7 @@ namespace CompanyTaskManager.Controllers
                 return NotFound();
 
             var employee = _context.Users.SingleOrDefault(e => e.UserId == requestTask.EmployeeId);
-            if (employee == null)
+            if (employee == null && requestTask.EmployeeId != -1)
                 return NotFound();
 
             var addedBy = _context.Users.SingleOrDefault(a => a.UserId == requestTask.AddedById);
@@ -56,10 +56,14 @@ namespace CompanyTaskManager.Controllers
             if (!canManageTasks)
                 return Unauthorized();
 
+            int? employeeId = requestTask.EmployeeId;
+            if (employeeId == -1)
+                employeeId = null;
+
             Models.Task newTask = new Models.Task
             {
                 WorkplacementId = requestTask.WorkplacementId,
-                EmployeeId = requestTask.EmployeeId,
+                EmployeeId = employeeId,
                 AddedById = requestTask.AddedById,
                 Title = requestTask.Title,
                 Description = requestTask.Description,
@@ -73,7 +77,39 @@ namespace CompanyTaskManager.Controllers
             return Ok(new { message = "Nowe zadanie zostało pomyślnie utworzone!" });
         }
 
+        [HttpPut]
+        [Authorize]
+        [Route("/api/[controller]/assign/{taskId}/{employeeId}")]
+        public IActionResult AssignUserToTask(int taskId, int employeeId)
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            var task = _context.Tasks
+                .Include(t => t.Workplacement)
+                    .ThenInclude(w => w.UserWorkplacements)
+                .SingleOrDefault(t => t.TaskId == taskId);
+
+            if (task == null)
+                return NotFound();
+
+            var relation = task.Workplacement.UserWorkplacements.SingleOrDefault(uw => uw.UserId == userId);
+            if (relation == null)
+                return Unauthorized();
+
+            if (!relation.CanManageTasks)
+                return Unauthorized();
+
+            var doesEmployeeExists = task.Workplacement.UserWorkplacements.Any(uw => uw.UserId == employeeId);
+            if (!doesEmployeeExists)
+                return NotFound();
+
+            task.EmployeeId = employeeId;
+            _context.SaveChanges();
+
+            return Ok(new { message = "Zadanie zostało pomyślnie przypisane"});
+        }
+
         [HttpGet]
+        [Authorize]
         [Route("/api/[controller]/{workplacementId}/{userId}")]
         public IActionResult GetTasks(int workplacementId, int userId )
         {
@@ -81,6 +117,19 @@ namespace CompanyTaskManager.Controllers
                 .Include(t => t.Employee)
                 .Include(t => t.AddedBy)
                 .Where(t => t.EmployeeId == userId && t.WorkplacementId == workplacementId);
+
+            return Ok(tasks);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/[controller]/{workplacementId}/freetasks")]
+        public IActionResult GetFreeTasks(int workplacementId)
+        {
+            var tasks = _context.Tasks
+                .Include(t => t.AddedBy)
+                .Include(t => t.Employee)
+                .Where(t => t.WorkplacementId == workplacementId && t.EmployeeId == null);
 
             return Ok(tasks);
         }
@@ -134,6 +183,32 @@ namespace CompanyTaskManager.Controllers
             _context.SaveChanges();
 
             return Ok(new { message = "Zadanie zostało pomyślnie usunięte" });
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("/api/[controller]/markasfree/{taskId}")]
+        public IActionResult MarkAsFreeTask(int taskId)
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            var task = _context.Tasks
+                .Include(t => t.Employee)
+                .Include(t => t.Workplacement)
+                    .ThenInclude(w => w.UserWorkplacements)
+                .SingleOrDefault(t => t.TaskId == taskId);
+
+            var relation = task.Workplacement.UserWorkplacements.SingleOrDefault(uw => uw.UserId == userId);
+            if (relation == null)
+                return Unauthorized();
+
+            if (!relation.CanManageTasks)
+                return Unauthorized();
+
+            task.EmployeeId = null;
+            task.Status = "todo";
+            _context.SaveChanges();
+
+            return Ok(new { message = "Zadanie zostało oznaczone jako nieprzypisane" });
         }
     }
 }

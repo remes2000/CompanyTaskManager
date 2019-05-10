@@ -1,5 +1,8 @@
 <app-modal #addTaskModal="modal">
-    <div modal-header>Dodaj zadanie dla {{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</div>
+    <div modal-header>
+      <p *ngIf="userId != -1">Dodaj zadanie dla {{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</p>
+      <p *ngIf="userId == -1">Dodaj zadanie nieprzypisane</p>
+    </div>
     <div modal-body>
       <div class="field">
         <div class="control">

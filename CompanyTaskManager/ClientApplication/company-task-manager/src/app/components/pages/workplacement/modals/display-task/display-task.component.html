@@ -13,14 +13,30 @@
     <p class="description">
       {{taskService.selectedTask.description}}
     </p>
+
+    <div *ngIf="taskService.selectedTask.employeeId === null && canManageTasks">
+      <hr>
+      <p>
+        <b>To zadanie nie jest przypisane do żadnego pracownika.</b>
+      </p>
+      <p>Przypisz zadanie do:</p>
+      <div class="select is-primary">
+          <select [(ngModel)]="newEmployeeId">
+            <option *ngFor="let member of workplacementService.currentWorkplacementsMembers" [value]="member.userId">{{member.name}} {{member.surname}}</option>
+          </select>
+      </div>
+      <br>
+      <button class="button is-success" (click)="assignEmployee()">Przypisz</button>
+    </div>
   </div>
   <div modal-footer>
-    <div *ngIf="taskService.selectedTask.employee.userId === authService.currentUserValue.userId" class="buttons">
+    <div *ngIf="!workplacementService.showFreeTasks && taskService.selectedTask.employee.userId === authService.currentUserValue.userId" class="buttons">
       <button class="button is-info" *ngIf="taskService.selectedTask.status !== 'doing'" (click)="changeStatus('doing')">Zmień status na "W trakcie pracy"</button>
       <button class="button is-success" *ngIf="taskService.selectedTask.status !=='done'" (click)="changeStatus('done')">Zmień status na "Zrobione"</button>
     </div>
     <div class="buttons">
         <button class="button is-danger" *ngIf="canManageTasks" (click)="deleteTask()">Usuń zadanie</button>
+        <button class="button" *ngIf="canManageTasks" (click)="markAsFree()">Oznacz jako nieprzypisane</button>
     </div>
   </div>
 </app-modal>

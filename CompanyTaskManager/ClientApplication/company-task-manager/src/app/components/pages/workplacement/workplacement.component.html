@@ -21,64 +21,90 @@
       <article class="tile is-child notification is-info" *ngIf="workplacementService.selectedUser !== null">
         <h3>Członkowie</h3>
         <ul class="members-list">
-          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers" (click)="selectUser(member.userId)" [class.selected]="member.userId===workplacementService.selectedUser.userId">
+          <li *ngFor="let member of workplacementService.currentWorkplacementsMembers" (click)="selectUser(member.userId)" [class.selected]="member.userId===workplacementService.selectedUser.userId && !workplacementService.showFreeTasks">
             <p class="name">{{member.name}} {{member.surname}}</p>
+          </li>
+          <li (click)="showFreeTasks()" [class.selected]="workplacementService.showFreeTasks">
+            <p class="name">Zadania nieprzypisane</p>
           </li>
         </ul>
       </article>
     </div>
     <div class="tile is-parent is-8">
       <article class="tile is-child notification">
-        <div *ngIf="workplacementService.selectedUser != null">
-          <h3>{{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</h3>
+        <div *ngIf="!workplacementService.showFreeTasks">
+          <div *ngIf="workplacementService.selectedUser != null">
+            <h3>{{workplacementService.selectedUser.name}} {{workplacementService.selectedUser.surname}}</h3>
+          </div>
+          <div *ngIf="canManageTasks" class="manager-panel">
+            <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, workplacementService.selectedUser.userId] } } ]">
+              Dodaj zadanie
+            </a>
+          </div>
         </div>
-        <div *ngIf="canManageTasks" class="manager-panel">
-          <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, workplacementService.selectedUser.userId] } } ]">
-            Dodaj zadanie
+        <div *ngIf="workplacementService.showFreeTasks">
+          <h3>Zadania nieprzypisane</h3>
+          <a class="button" [routerLink]="[ '', {outlets: { modal: ['add-task', idFromRoute, -1] } } ]">
+              Dodaj zadanie
           </a>
+          <ul class="tasks">
+              <li *ngFor="let task of taskService.currentWorkplacementFreeTasks" class="task">
+                <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+                  <h4>{{task.title}}</h4>
+                  <p><b>{{task.priority | priority}} priorytet</b></p>
+                  <p class="description">
+                    {{task.description}}
+                  </p>
+                  <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+                  <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+                </a>
+              </li>
+            </ul>
         </div>
-        <h4>Do zrobienia:</h4>
-        <ul class="tasks">
-          <li *ngFor="let task of taskService.selectedUserTasks.filter(todoFilter).sort(sortByPriority)" class="task">
-            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
-              <h4>{{task.title}}</h4>
-              <p><b>{{task.priority | priority}} priorytet</b></p>
-              <p class="description">
-                {{task.description}}
-              </p>
-              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
-              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
-            </a>
-          </li>
-        </ul>
-        <h4>W trakcie pracy:</h4>
-        <ul class="tasks">
-          <li *ngFor="let task of taskService.selectedUserTasks.filter(doingFilter).sort(sortByPriority)" class="task doing-tasks">
-            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
-              <h4>{{task.title}}</h4>
-              <p><b>{{task.priority | priority}} priorytet</b></p>
-              <p class="description">
-                {{task.description}}
-              </p>
-              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
-              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
-            </a>
-          </li>
-        </ul>
-        <h4>Zrobione: </h4>
-        <ul class="tasks">
-          <li *ngFor="let task of taskService.selectedUserTasks.filter(doneFilter).sort(sortByPriority)" class="task done-tasks">
-            <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
-              <h4>{{task.title}}</h4>
-              <p><b>{{task.priority | priority}} priorytet</b></p>
-              <p class="description">
-                {{task.description}}
-              </p>
-              <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
-              <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
-            </a>
-          </li>
-        </ul>
+        <div *ngIf="!workplacementService.showFreeTasks">
+          <h4>Do zrobienia:</h4>
+          <ul class="tasks">
+            <li *ngFor="let task of taskService.selectedUserTasks.filter(todoFilter).sort(sortByPriority)" class="task">
+              <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+                <h4>{{task.title}}</h4>
+                <p><b>{{task.priority | priority}} priorytet</b></p>
+                <p class="description">
+                  {{task.description}}
+                </p>
+                <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+                <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+              </a>
+            </li>
+          </ul>
+          <h4>W trakcie pracy:</h4>
+          <ul class="tasks">
+            <li *ngFor="let task of taskService.selectedUserTasks.filter(doingFilter).sort(sortByPriority)" class="task doing-tasks">
+              <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+                <h4>{{task.title}}</h4>
+                <p><b>{{task.priority | priority}} priorytet</b></p>
+                <p class="description">
+                  {{task.description}}
+                </p>
+                <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+                <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+              </a>
+            </li>
+          </ul>
+          <h4>Zrobione: </h4>
+          <ul class="tasks">
+            <li *ngFor="let task of taskService.selectedUserTasks.filter(doneFilter).sort(sortByPriority)" class="task done-tasks">
+              <a [routerLink]="[ '', {outlets: { modal: ['display-task'] } } ]" (click)="taskService.selectTask(task)">
+                <h4>{{task.title}}</h4>
+                <p><b>{{task.priority | priority}} priorytet</b></p>
+                <p class="description">
+                  {{task.description}}
+                </p>
+                <p><b>Zadane przez: {{task.addedBy.name}} {{task.addedBy.surname}}</b></p>
+                <p><b>Dodano: {{task.addDate | date:'dd-LL-yyyy HH:mm'}}</b></p>
+              </a>
+            </li>
+          </ul>
+        </div>
       </article>
     </div>
   </div>

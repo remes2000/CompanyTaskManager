@@ -16,6 +16,7 @@ export class TaskService {
   ) { }
 
   public selectedUserTasks: Array<Task> = []
+  public currentWorkplacementFreeTasks: Array<Task> = []
   public selectedTask: Task = null
 
   create(title: string, description: string, priority: string, employeeId: number, workplacementId: number){
@@ -25,6 +26,12 @@ export class TaskService {
   updateTasks(workplacementId: number, userId: number){
     this.apiService.get(`/tasks/${workplacementId}/${userId}`).subscribe((res: Task[]) => {
       this.selectedUserTasks = res
+    })
+  }
+
+  updateFreeTasks(workplacementId: number){
+    this.apiService.get(`/tasks/${workplacementId}/freetasks`).subscribe((res: Task[]) => {
+      this.currentWorkplacementFreeTasks = res
     })
   }
 
@@ -38,5 +45,13 @@ export class TaskService {
 
   deleteTask(task: Task){
     return this.apiService.delete(`/tasks/${task.taskId}`)
+  }
+
+  assignFreeTask(taskId: number, employeeId: number){
+    return this.apiService.put(`/tasks/assign/${taskId}/${employeeId}`)
+  }
+
+  markAsFree(taskId: number){
+    return this.apiService.put(`/tasks/markasfree/${taskId}`)
   }
 }

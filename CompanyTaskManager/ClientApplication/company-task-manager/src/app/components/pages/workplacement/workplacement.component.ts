@@ -44,6 +44,7 @@ export class WorkplacementComponent implements OnInit {
   }
 
   selectUser(userId: number){
+    this.workplacementService.showFreeTasks = false
     this.workplacementService.selectedUser = this.workplacementService.currentWorkplacementsMembers.filter(m => m.userId === userId)[0]
 
     this.taskService.updateTasks(this.idFromRoute, userId)
@@ -64,5 +65,10 @@ export class WorkplacementComponent implements OnInit {
   sortByPriority(a: Task, b: Task){
     const pipe = new PriorityPipe()
     return  pipe.transform(b.priority, true) - pipe.transform(a.priority, true)
+  }
+
+  showFreeTasks(){
+    this.workplacementService.showFreeTasks = true
+    this.taskService.updateFreeTasks(this.idFromRoute)
   }
 }

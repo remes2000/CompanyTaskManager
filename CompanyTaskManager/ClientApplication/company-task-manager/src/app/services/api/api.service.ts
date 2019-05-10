@@ -33,4 +33,9 @@ export class ApiService {
     return this.http.delete(`${environment.api_url}${path}`, { params })
       .pipe(catchError(this.formatErrors))
   }
+
+  put(path: string, params: HttpParams = new HttpParams()): Observable<any>{
+    return this.http.put(`${environment.api_url}${path}`, { params })
+      .pipe(catchError(this.formatErrors))
+  }
 }

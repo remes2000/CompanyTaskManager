@@ -37,9 +37,13 @@ export class AddTaskComponent implements OnInit {
     if(this.title === '' || this.description === ''){
       this.messageService.pushMessage('Uzupełnij wszystkie pola formularza!', 'error', 5)
     }
+
     this.taskService.create(this.title, this.description, this.priority, this.userId, this.workplacementId).subscribe((res: ApiResponse) => {
       this.messageService.pushMessage(res.message, 'successful', 5)
-      this.taskService.updateTasks(this.workplacementId, this.userId)
+      if(this.userId != -1)
+        this.taskService.updateTasks(this.workplacementId, this.userId)
+      else
+        this.taskService.updateFreeTasks(this.workplacementId)
       this.addTaskModal.closeModal({submitted: true})
     })
   }

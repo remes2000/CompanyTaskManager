@@ -18,6 +18,7 @@ export class WorkplacementService {
 
   public currentWorkplacementsMembers: User[] = []
   public selectedUser: User = null
+  public showFreeTasks = false
 
   create(title: string, description: string){
     this.apiService.post('/workplacements', {title, description}).subscribe((response: ApiResponse) => {
