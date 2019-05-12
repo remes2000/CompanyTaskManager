@@ -1,3 +1,37 @@
-<p>
-  homepage works!
-</p>
+<div class="header-image">
+  <header>
+    <span class="first-word">Company</span> Task Manager
+  </header>
+  <p>Zarządzaj pracami swojego zespołu!</p>
+</div>
+<article>
+  <h2>O projekcie</h2>
+  <p>
+    <b>Comapny Task Manager</b> to aplikacja internetowa, która ma pomóc właścicielą małych i średnich firm organizować pracę w swojej firmie.
+    Została ona przygotowana jako praca konkursowa na <b>XXVII Kaliski Konkurs Informatyczny</b>. Za jej pomocą manager firmy może przydzielać swoim pracowniką poszczególne zadania
+    określając ich priorytet. Manager może również śledzić postęp oraz efektywność swoich pracowników. Pracownik natomiast może w łatwy sposób podejrzeć jakie zadania czekają 
+    na niego danego dnia co pozwoli mu lepiej zorganizować swoją pracę.
+  </p>
+  <hr>
+  <p>
+    Przechodząc w zakładkę "dashboard" zostaniemy przeniesieni do panelu w którym wyświetlone zostaną miejsca pracy do których należymy.
+    Mamy tam również dostęp do menu za pomocą którego możemy dodać nowe miejsce pracy jak również usunąć istniejące.
+  </p>
+  <p>
+    Klikając w interesujące nas miejsce pracy zostaniemy przenisieni do panelu zarządzania zadaniami. W tym miejscu właściciel miejsca pracy może dodawać i usuwać 
+    pracowników. W niebieskim panelu znajdującym się po lewej stronie dostępna jest lista pracowników. Po naciśnięciu na interesującą nas osobę po prawej stronie
+    widoczne będą zadania do niej przypisane. Pojawi się również przycisk "Dodaj zadanie", który przeniesie nas do formularza tworzenia nowego zadania.
+    Na liście użytkowników widoczna jest również opcja "zadania nieprzypisane". W tym miejscu znajdują się utworzone zadania, które nie są jeszcze przypisane do 
+    żadnego z pracowników. Manager miejsca pracy dodając zadanie określa jego priorytet, na liście więc zadania posortowane są w zależności od niego. 
+    Każde z zadań posiada swój tytuł oraz opis. Oprócz tego każde zadanie ma swój status "do zrobienia", "w trakcie pracy", "zrobione". Status zadania może zmienić
+    tylko pracownik do którego to zadanie zostało przypisane.
+  </p>
+</article>
+<article>
+  <h2>Strona techniczna projektu</h2>
+  <p>
+    Aplikacja <b>Company Task Manager</b> została zbudowana z dwóch "klocków". Pierwszym z nich jest REST API które przetwarza zapytania i odpowiada za komunikację z bazą danych.
+    REST API zostało napisane w technologii <b>.Netcore</b> z wykorzystaniem bazy danych <b>PostgreSQL</b>. Drugim z "klocków" jest aplikacja kliencka, której zadaniem jest przetwarzanie
+    informacji dostarczanych przez REST API. Została ona napisana przy pomocy frameworka <b>Angular</b> w wersji 7.
+  </p>
+</article>

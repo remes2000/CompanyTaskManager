@@ -10,12 +10,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
 
   constructor(
-    private messagesService: MessagesService,
-    private authService: AuthService
+    public messagesService: MessagesService,
+    public authService: AuthService
   ) { }
 
-  private password: string = ''
-  private username: string = ''
+  public password: string = ''
+  public username: string = ''
 
   ngOnInit() {
   }

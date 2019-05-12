@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,21 @@ namespace CompanyTaskManager
                     .AllowAnyHeader());
             app.UseAuthentication();
             app.UseMvc();
+            app.UseWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
+            {
+                builder.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                    {
+                        context.Request.Path = "/index.html";
+                        await next();
+                    }
+                })
+                    .UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new List<string> { "index.html" } })
+                    .UseStaticFiles()
+                    .UseMvc();
+            });
         }
     }
 }

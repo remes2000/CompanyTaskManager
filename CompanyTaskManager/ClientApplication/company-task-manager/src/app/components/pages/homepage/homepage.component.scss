@@ -1,0 +1,57 @@
+.header-image{
+    width: 100%;
+    margin: 3rem 0;
+    padding: 15rem 0;
+    background-image: url("../../../../assets/work.jpg");
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    letter-spacing: .2rem;
+    color: white;
+    flex-direction: column;
+}
+
+header{
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    .first-word{
+        color: #00d1b2;
+    }
+}
+
+article{
+    h2{
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    p{
+        text-align: justify;
+        margin: 1.3rem 0;
+    }
+}
+
+@media (max-width: 750px){
+    h1{
+        text-align: center;
+    }
+
+    header{
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .header-image{
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    article{
+        padding: 1rem;
+    }
+}

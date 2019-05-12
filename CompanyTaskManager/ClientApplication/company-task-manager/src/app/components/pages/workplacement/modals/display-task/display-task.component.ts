@@ -14,15 +14,15 @@ import { WorkplacementService } from 'src/app/services/workplacement/workplaceme
 export class DisplayTaskComponent implements OnInit {
 
   constructor(
-    private taskService: TaskService,
-    private authService: AuthService,
-    private messageService: MessagesService,
-    private workplacementService: WorkplacementService
+    public taskService: TaskService,
+    public authService: AuthService,
+    public messageService: MessagesService,
+    public workplacementService: WorkplacementService
   ) { }
 
   @ViewChild("displayTaskModal") displayTaskModal: ModalComponent;
-  private canManageTasks: boolean = false
-  private newEmployeeId?: number = null
+  public canManageTasks: boolean = false
+  public newEmployeeId?: number = null
 
   ngOnInit() {
     this.workplacementService.canManageTasks(this.authService.currentUserValue.userId, this.taskService.selectedTask.workplacementId).subscribe((res: boolean) => {
@@ -59,7 +59,7 @@ export class DisplayTaskComponent implements OnInit {
       if(!res.message)
         return 
       
-        this.taskService.updateTasks(this.taskService.selectedTask.workplacementId, this.taskService.selectedTask.employeeId)
+      this.taskService.updateTasks(this.taskService.selectedTask.workplacementId, this.taskService.selectedTask.employeeId)
       this.messageService.pushMessage(res.message, 'successful', 5)
       this.displayTaskModal.closeModal({submitted: true})
     })

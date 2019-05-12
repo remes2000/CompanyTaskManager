@@ -21,6 +21,7 @@ import { DisplayTaskComponent } from './components/pages/workplacement/modals/di
 import { PriorityPipe } from './components/pipes/priority.pipe';
 import { DeleteEmployeeComponent } from './components/pages/workplacement/modals/delete-employee/delete-employee.component';
 import { DeleteWorkplacementComponent } from './components/pages/dashboard/modals/delete-workplacement/delete-workplacement.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DeleteWorkplacementComponent } from './components/pages/dashboard/modal
     DisplayTaskComponent,
     PriorityPipe,
     DeleteEmployeeComponent,
-    DeleteWorkplacementComponent
+    DeleteWorkplacementComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

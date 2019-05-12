@@ -12,14 +12,14 @@ import { Route, ActivatedRoute } from '@angular/router';
 export class AddEmployeeComponent implements OnInit {
 
   constructor(
-    private messagesService: MessagesService,
-    private workplacementService: WorkplacementService,
-    private route: ActivatedRoute
+    public messagesService: MessagesService,
+    public workplacementService: WorkplacementService,
+    public route: ActivatedRoute
   ) { }
 
-  private username : string = ''
-  private canManageTasks: boolean = false
-  private workplacementId: number = -1
+  public username : string = ''
+  public canManageTasks: boolean = false
+  public workplacementId: number = -1
 
   ngOnInit() {
     this.workplacementId = this.route.snapshot.params['workplacementId']

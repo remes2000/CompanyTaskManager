@@ -12,16 +12,16 @@ import { ApiResponse } from 'src/app/models/ApiResponse';
 export class RegisterComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
-    private messagesService: MessagesService
+    public authService: AuthService,
+    public messagesService: MessagesService
   ) { }
 
-  private username: string = ''
-  private name: string = ''
-  private surname: string = ''
-  private email: string = ''
-  private password: string = ''
-  private passwordRepeat: string = ''
+  public username: string = ''
+  public name: string = ''
+  public surname: string = ''
+  public email: string = ''
+  public password: string = ''
+  public passwordRepeat: string = ''
 
   ngOnInit() {
   }

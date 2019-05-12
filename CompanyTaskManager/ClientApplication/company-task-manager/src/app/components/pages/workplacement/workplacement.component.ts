@@ -16,15 +16,15 @@ import { PriorityPipe } from '../../pipes/priority.pipe';
 export class WorkplacementComponent implements OnInit {
 
   constructor(
-    private workplacementService: WorkplacementService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private taskService: TaskService
+    public workplacementService: WorkplacementService,
+    public authService: AuthService,
+    public route: ActivatedRoute,
+    public taskService: TaskService
   ) { }
 
-  private idFromRoute: number = -1
-  private workplacement: Workplacement = null
-  private canManageTasks: boolean = false
+  public idFromRoute: number = -1
+  public workplacement: Workplacement = null
+  public canManageTasks: boolean = false
 
   ngOnInit() {
     this.idFromRoute = this.route.snapshot.params['id']

@@ -12,3 +12,10 @@ h2{
 .field{
     margin: 2rem 0;
 }
+
+@media (max-width: 750px){
+    .add-workplacement-form-container{
+        width: 85%;
+        margin: 0 auto;
+    }
+}

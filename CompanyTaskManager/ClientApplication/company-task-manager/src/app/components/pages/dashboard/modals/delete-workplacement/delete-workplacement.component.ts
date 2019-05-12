@@ -14,13 +14,13 @@ import { ModalComponent } from 'src/app/components/modal/modal.component';
 export class DeleteWorkplacementComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
-    private messagesService: MessagesService,
-    private workplacementService: WorkplacementService
+    public authService: AuthService,
+    public messagesService: MessagesService,
+    public workplacementService: WorkplacementService
   ) { }
 
-  private workplacements: Workplacement[] = []
-  private selectedWorkplacement: Workplacement = null
+  public workplacements: Workplacement[] = []
+  public selectedWorkplacement: Workplacement = null
   @ViewChild("deleteWorkplacementModal") deleteWorkplacementModal: ModalComponent;
 
   ngOnInit() {

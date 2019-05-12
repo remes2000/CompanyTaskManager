@@ -10,11 +10,11 @@ import { WorkplacementService } from 'src/app/services/workplacement/workplaceme
 export class AddWorkplacementComponent implements OnInit {
 
   constructor(
-    private workplacementService: WorkplacementService
+    public workplacementService: WorkplacementService
   ) { }
 
-  private title: string = ''
-  private description: string = ''
+  public title: string = ''
+  public description: string = ''
 
   ngOnInit() {
   }

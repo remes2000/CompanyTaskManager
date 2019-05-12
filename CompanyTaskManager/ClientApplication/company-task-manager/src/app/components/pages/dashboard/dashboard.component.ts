@@ -10,7 +10,7 @@ import { Workplacement } from 'src/app/models/Workplacement';
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private workplacementService: WorkplacementService
+    public workplacementService: WorkplacementService
   ) { }
 
   ngOnInit() {

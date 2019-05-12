@@ -5,7 +5,7 @@
         <p class="modal-card-title">
             <ng-content select="[modal-header]"></ng-content>
         </p>
-        <button class="delete" aria-label="close" (click)="closeModal()"></button>
+        <button class="delete" aria-label="close" (click)="closeModal({submitted: true})"></button>
       </header>
       <section class="modal-card-body">
           <ng-content select="[modal-body]"></ng-content>

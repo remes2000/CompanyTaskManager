@@ -9,10 +9,16 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class NavbarComponent implements OnInit {
 
   constructor(
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
   }
 
+  hamburgerClicked(){
+    const nav = document.getElementById('companytaskmanagernavigation')
+    const hamburger = document.getElementById('hamburger')
+    nav.classList.toggle('is-active')
+    hamburger.classList.toggle('is-active')
+  }
 }

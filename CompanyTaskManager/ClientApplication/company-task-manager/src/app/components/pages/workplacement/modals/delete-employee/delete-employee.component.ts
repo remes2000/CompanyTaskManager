@@ -15,15 +15,15 @@ import { ActivatedRoute } from '@angular/router';
 export class DeleteEmployeeComponent implements OnInit {
 
   constructor(
-    private workplacementService: WorkplacementService,
-    private authService: AuthService,
-    private messageService: MessagesService,
-    private route: ActivatedRoute
+    public workplacementService: WorkplacementService,
+    public authService: AuthService,
+    public messageService: MessagesService,
+    public route: ActivatedRoute
   ) { }
 
   @ViewChild("deleteEmployeeModal") deleteEmployeeModal: ModalComponent;
-  private selectedUser: User = null
-  private workplacementId: number = -1
+  public selectedUser: User = null
+  public workplacementId: number = -1
 
   ngOnInit() {
     this.workplacementId = this.route.snapshot.params['workplacementId']

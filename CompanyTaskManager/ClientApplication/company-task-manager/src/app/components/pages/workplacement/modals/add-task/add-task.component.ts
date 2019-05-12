@@ -14,19 +14,19 @@ import { ModalComponent } from 'src/app/components/modal/modal.component';
 export class AddTaskComponent implements OnInit {
 
   constructor(
-    private messageService: MessagesService,
-    private workplacementService: WorkplacementService,
-    private taskService: TaskService,
-    private route: ActivatedRoute
+    public messageService: MessagesService,
+    public workplacementService: WorkplacementService,
+    public taskService: TaskService,
+    public route: ActivatedRoute
   ) { }
 
   @ViewChild("addTaskModal") addTaskModal: ModalComponent;
-  private title: string = ''
-  private description: string = ''
-  private priority: string = 'normal'
+  public title: string = ''
+  public description: string = ''
+  public priority: string = 'normal'
 
-  private workplacementId: number = -1
-  private userId: number = -1
+  public workplacementId: number = -1
+  public userId: number = -1
 
   ngOnInit() {
     this.workplacementId = this.route.snapshot.params['workplacementId']
